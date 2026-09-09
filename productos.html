@@ -300,12 +300,29 @@
 </footer>
 
   <script>
+        // Asegurate de llamar al archivo correcto (menu_2.html)
+    fetch('menu.html')
+      .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al cargar el menú');
+        }
+        return response.text();
+      })
+      .then(data => {
+        // 1. Inyectamos el menú en el header
+        document.getElementById('menu-contenedor').innerHTML = data;
+        
+        // 2. AHORA buscamos el botón y le damos la funcionalidad
         const menuToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.main-nav');
-
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+        const navLinks = document.querySelector('.main-nav');
+    
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+      })
+      .catch(error => console.error('Hubo un problema con el fetch:', error));
 
     function cambiarImagen330(nuevaRuta) {
             // Selecciona la imagen por su ID y cambia su atributo 'src'
